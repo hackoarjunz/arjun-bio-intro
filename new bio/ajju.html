@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Arjun | Cyberpunk Profile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #040308;
+      --card-bg: #060308;
+      --accent: #ff2244;
+      --accent-soft: rgba(255, 34, 68, 0.25);
+      --text-main: #f7f7f7;
+      --text-sub: #9a9a9a;
+      --radius: 28px;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: "Poppins", sans-serif;
+      background: radial-gradient(circle at top, #150515 0, #030006 40%, #020005 100%);
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* animated stars background */
+    .stars {
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,0.9) 0, transparent 55%),
+        radial-gradient(2px 2px at 80% 30%, rgba(255,255,255,0.9) 0, transparent 55%),
+        radial-gradient(1px 1px at 30% 60%, rgba(255,255,255,0.7) 0, transparent 55%),
+        radial-gradient(2px 2px at 60% 80%, rgba(255,255,255,0.9) 0, transparent 55%),
+        radial-gradient(1px 1px at 40% 20%, rgba(255,255,255,0.7) 0, transparent 55%),
+        radial-gradient(2px 2px at 70% 50%, rgba(255,255,255,1) 0, transparent 55%);
+      opacity: 0.75;
+      pointer-events: none;
+      animation: starFloat 24s linear infinite alternate;
+      z-index: 0;
+    }
+
+    @keyframes starFloat {
+      0% { transform: translate3d(0,0,0) scale(1); opacity: .6;}
+      50% { transform: translate3d(-10px,-15px,0) scale(1.03); opacity: .9;}
+      100% { transform: translate3d(10px,10px,0) scale(1.02); opacity: .8;}
+    }
+
+    .wrapper {
+      position: relative;
+      z-index: 2;
+      padding: 40px 16px;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .card {
+      width: min(480px, 100% - 32px);
+      background: radial-gradient(circle at top, #18000a 0, #070007 40%, #020004 100%);
+      border-radius: var(--radius);
+      padding: 40px 32px 28px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      position: relative;
+      text-align: center;
+      box-shadow:
+        0 0 90px rgba(0, 0, 0, 1),
+        0 0 120px rgba(255, 0, 40, 0.55);
+      overflow: hidden;
+      animation: cardIn 0.8s ease-out forwards;
+      transform-origin: center;
+      opacity: 0;
+    }
+
+    /* outer cyberpunk glow halo */
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -60px;
+      border-radius: inherit;
+      background: radial-gradient(circle, rgba(255,0,60,0.35), transparent 60%);
+      filter: blur(20px);
+      opacity: 0.6;
+      z-index: -1;
+    }
+
+    @keyframes cardIn {
+      0% { opacity: 0; transform: translateY(20px) scale(0.96); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* avatar */
+    .avatar-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+
+    .avatar-ring {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      background: conic-gradient(
+        from 0deg,
+        rgba(255, 0, 80, 1),
+        rgba(255, 255, 255, .6),
+        rgba(255, 0, 80, 1),
+        rgba(180, 0, 40, 1)
+      );
+      padding: 3px;
+      filter: drop-shadow(0 0 20px rgba(255,0,60,0.8));
+      animation: spinRing 10s linear infinite;
+    }
+
+    @keyframes spinRing {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .avatar-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      overflow: hidden;
+      background: #050505;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .avatar-inner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(1.1) contrast(1.1);
+    }
+
+    /* glitch text */
+    .glitch {
+      position: relative;
+      display: inline-block;
+      color: var(--text-main);
+    }
+    .glitch::before,
+    .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+      clip-path: inset(0 0 0 0);
+    }
+    .glitch::before {
+      left: -1px;
+      text-shadow: -2px 0 rgba(255,0,70,0.8);
+      animation: glitchTop 2s infinite linear alternate-reverse;
+    }
+    .glitch::after {
+      left: 1px;
+      text-shadow: 2px 0 rgba(255,255,255,0.7);
+      animation: glitchBottom 2.4s infinite linear alternate-reverse;
+    }
+
+    @keyframes glitchTop {
+      0% { clip-path: inset(0 0 0 0); transform: translate(0,0); }
+      20% { clip-path: inset(0 0 60% 0); transform: translate(-1px,-1px);}
+      40% { clip-path: inset(0 0 20% 0); transform: translate(-0.5px,0.5px);}
+      60% { clip-path: inset(0 0 40% 0); transform: translate(0.5px,-0.5px);}
+      80% { clip-path: inset(0 0 80% 0); transform: translate(0,0);}
+      100% { clip-path: inset(0 0 0 0); transform: translate(0,0);}
+    }
+    @keyframes glitchBottom {
+      0% { clip-path: inset(0 0 0 0); transform: translate(0,0);}
+      20% { clip-path: inset(60% 0 0 0); transform: translate(1px,1px);}
+      40% { clip-path: inset(20% 0 0 0); transform: translate(0.5px,-0.5px);}
+      60% { clip-path: inset(40% 0 0 0); transform: translate(-0.5px,0.5px);}
+      80% { clip-path: inset(80% 0 0 0); transform: translate(0,0);}
+      100% { clip-path: inset(0 0 0 0); transform: translate(0,0);}
+    }
+
+    .title {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      text-shadow: 0 0 18px rgba(255,255,255,0.8), 0 0 35px rgba(255,0,50,0.9);
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: var(--text-sub);
+      margin-bottom: 18px;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 22px;
+    }
+
+    .pill {
+      font-size: 11px;
+      padding: 7px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: #f7f7f7;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s, border-color .2s;
+    }
+
+    .pill:hover {
+      transform: translateY(-1px);
+      background: rgba(255, 0, 60, 0.18);
+      border-color: rgba(255, 0, 60, 0.7);
+      box-shadow: 0 0 14px rgba(255, 0, 70, 0.65);
+    }
+
+    /* sharp neon buttons */
+    .links {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      margin-bottom: 26px;
+      flex-wrap: wrap;
+    }
+
+    .btn-neon {
+      position: relative;
+      padding: 9px 22px;
+      font-size: 13px;
+      border-radius: 6px; /* sharp, not pill */
+      border: 1px solid rgba(255, 0, 50, 0.8);
+      background: linear-gradient(135deg, rgba(255,0,50,0.35), rgba(0,0,0,0.9));
+      color: #fff;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 500;
+      overflow: hidden;
+      cursor: pointer;
+      transition: box-shadow .2s, transform .15s, border-color .2s, background .2s;
+    }
+
+    .btn-neon::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -50%;
+      width: 40%;
+      height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.6), transparent);
+      transform: skewX(-20deg);
+      opacity: 0;
+    }
+
+    .btn-neon:hover::before {
+      animation: shine 0.6s forwards;
+    }
+
+    @keyframes shine {
+      0% { transform: translateX(0) skewX(-20deg); opacity: 0;}
+      50% { opacity: 1;}
+      100% { transform: translateX(260%) skewX(-20deg); opacity: 0;}
+    }
+
+    .btn-neon:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 18px rgba(255,0,70,0.9);
+      background: linear-gradient(135deg, rgba(255,0,60,0.6), rgba(0,0,0,1));
+    }
+
+    /* ripple on click */
+    .btn-neon .ripple {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.4);
+      transform: scale(0);
+      animation: ripple 0.5s ease-out;
+      pointer-events: none;
+    }
+
+    @keyframes ripple {
+      to {
+        transform: scale(10);
+        opacity: 0;
+      }
+    }
+
+    /* Volume */
+    .volume-block {
+      margin-bottom: 20px;
+    }
+
+    .volume-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-sub);
+      margin-bottom: 8px;
+    }
+
+    .volume-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 70%;
+      height: 4px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.18);
+      outline: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow:
+        0 0 18px rgba(255, 0, 60, 0.95),
+        0 0 10px rgba(255,255,255,1);
+      margin-top: -6px;
+      cursor: pointer;
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #fff;
+      border: none;
+      box-shadow:
+        0 0 18px rgba(255, 0, 60, 0.95),
+        0 0 10px rgba(255,255,255,1);
+      cursor: pointer;
+    }
+
+    .vol-value {
+      font-size: 11px;
+      color: var(--text-sub);
+      min-width: 34px;
+      text-align: left;
+    }
+
+    .footer {
+      font-size: 10px;
+      color: var(--text-sub);
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+
+    .subtitle.glitch,
+    .footer.glitch {
+      font-size: 11px;
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        padding: 32px 22px 24px;
+      }
+      .title {
+        font-size: 22px;
+        letter-spacing: 3px;
+      }
+      .links {
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+
+  <div class="wrapper">
+    <div class="card">
+      <!-- Avatar -->
+      <div class="avatar-wrap">
+        <div class="avatar-ring">
+          <div class="avatar-inner">
+            <!-- yaha apni image link daalna -->
+            <img src="https://i.postimg.cc/R0SGwrQV/my-pic.png" alt="Profile">
+          </div>
+        </div>
+      </div>
+
+      <!-- Glitch Title -->
+      <div class="title glitch" data-text="! ARJUN ?">! ARJUN ?</div>
+      <div class="subtitle glitch" data-text="Life is just a search of Peace.">
+        Life is just a search of Peace.
+      </div>
+
+      <!-- Tags -->
+      <div class="pill-row">
+        <span class="pill glitch" data-text="Owner">Owner</span>
+        <span class="pill glitch" data-text="Developer">Developer</span>
+        <span class="pill glitch" data-text="Trusted">Trusted</span>
+        <span class="pill glitch" data-text="Nightmare">Nightmare</span>
+      </div>
+
+      <!-- Sharp Neon Buttons -->
+      <div class="links">
+        <a class="btn-neon" href="https://discord.gg/8JU9tYx7mN" target="_blank">Discord</a>
+        <a class="btn-neon" href="https://www.instagram.com/arjunnn021/" target="_blank">Instagram</a>
+        <a class="btn-neon" href="https://www.youtube.com/@gamingarjun368" target="_blank">YouTube</a>
+      </div>
+
+      <!-- Volume + Music -->
+      <div class="volume-block">
+        <div class="volume-label glitch" data-text="Volume">Volume</div>
+        <div class="volume-row">
+          <input id="volumeRange" type="range" min="0" max="100" value="60">
+          <span class="vol-value" id="volValue">60%</span>
+        </div>
+      </div>
+
+      <div class="footer glitch" data-text="© 2025 ARJUN | ON TOP">
+        © 2025 ARJUN | ON TOP
+      </div>
+    </div>
+  </div>
+
+  <!-- Music -->
+  <!-- same folder me music.mp3 file rakho ya URL do -->
+  <audio id="bgMusic" src="music.mp3" loop></audio>
+
+  <script>
+    const music = document.getElementById('bgMusic');
+    const range = document.getElementById('volumeRange');
+    const valLabel = document.getElementById('volValue');
+    music.volume = range.value / 100;
+
+    // try autoplay (browser block kare to user interaction pe play ho jayega)
+    window.addEventListener('load', () => {
+      music.play().catch(() => {
+        // ignore; user interaction needed
+      });
+    });
+
+    range.addEventListener('input', () => {
+      const v = range.value;
+      valLabel.textContent = v + '%';
+      music.volume = v / 100;
+      // slider move = user gesture => play allowed
+      if (music.paused) {
+        music.play().catch(() => {});
+      }
+    });
+
+    // ripple effect on neon buttons
+    document.querySelectorAll('.btn-neon').forEach(btn => {
+      btn.addEventListener('click', function (e) {
+        const rect = this.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const ripple = document.createElement('span');
+        ripple.classList.add('ripple');
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+
+        this.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 500);
+      });
+    });
+  </script>
+</body>
+</html>
